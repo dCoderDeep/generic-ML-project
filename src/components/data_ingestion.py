@@ -62,10 +62,15 @@ class DataIngestion:
 if __name__ == "__main__":
     # Create an instance of the DataIngestion class and initiate the data ingestion process.
     obj = DataIngestion()
-    train_data,test_data=obj.initiate_data_ingestion()
+    # Initiate data ingestion to obtain training and testing data.
+    train_data, test_data = obj.initiate_data_ingestion()
 
+    # Create an instance of the DataTransformation class.
     data_transformation = DataTransformation()
-    train_arr, test_arr,_= data_transformation.initiate_data_transformation(train_data,test_data)
+    # Initiate data transformation on the training and testing data.
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
+    # Create an instance of the ModelTrainer class.
     modeltrainer = ModelTrainer()
+    # Initiate the model training process and print the result.
     print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
