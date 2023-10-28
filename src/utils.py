@@ -5,6 +5,7 @@ import numpy as np
 from src.exception import CustomException
 import dill
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 def save_object(file_path, obj):
     """
@@ -30,7 +31,7 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e, sys)
 
-def evaluate_models(X_train, y_train, X_test, y_test, models):
+def evaluate_models(X_train, y_train, X_test, y_test, models,param):
     """
     Evaluate a set of machine learning models using R-squared (R2) score.
 
@@ -49,11 +50,30 @@ def evaluate_models(X_train, y_train, X_test, y_test, models):
 
     """
     try:
+        # Create an empty dictionary to store model evaluation reports.
         report = {}
+        # Iterate through a list of machine learning models.
         for i in range(len(list(models))):
+            
+            # Get the hyperparameter grid for grid search for the current model.
             model = list(models.values())[i]
+
+            # Get the hyperparameter grid for grid search for the current model.
+            parameters = param[list(models.keys())[i]]
+
+            # Initialize GridSearchCV with the model and hyperparameter grid, using 3-fold cross-validation.
+            gs = GridSearchCV(model,parameters,cv=3)
+            
+            # Perform grid search to find the best hyperparameters for the model using training data.
+            gs.fit(X_train,y_train)
+
+            # Set the model's hyperparameters to the best parameters found during grid search.
+            model.set_params(**gs.best_params_)
+
+            # Fit the model to the training data with the best hyperparameters.    
             model.fit(X_train, y_train)
 
+            # Make predictions on the training and test data using the trained model.
             y_train_pred = model.predict(X_train)
             y_test_pred = model.predict(X_test)
 
@@ -61,6 +81,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models):
             train_model_score = r2_score(y_train, y_train_pred)
             test_model_score = r2_score(y_test, y_test_pred)
 
+            # Store the model's evaluation results in the report dictionary, using the model's name as the key.
             report[list(models.keys())[i]] = test_model_score
 
         return report
