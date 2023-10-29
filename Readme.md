@@ -1,4 +1,3 @@
-Machine Learning/DL Project Template
 Welcome to this Machine Learning/Deep Learning project template! This repository is designed to help you kickstart your ML/DL projects by providing a clean and organized folder structure.
 
 We have trained a machine learning model using the provided student data to predict a student's math score based on various attributes. The model is saved in the /artifacts/model.pkl
