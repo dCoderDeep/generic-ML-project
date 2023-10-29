@@ -25,4 +25,6 @@ python app.py
 7. Make Predictions: To make predictions based on the provided student data, navigate to http://127.0.0.1:5000/predictdata. Fill out the form, and the application will provide you with the predicted value.
 
 
-Feel free to customize and build upon this template for your specific ML/DL project needs. Happy coding!
+Feel free to customize and build upon this template for your specific ML/DL project needs. Happy coding! 🚀
+
+If you find this project helpful or have suggestions for improvements, don't hesitate to reach out. You can contact me via email at [rdeependra33@gmail.com].
